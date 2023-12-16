@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo/feature/onboarding/presentation/onboarding_screen.dart';
+import 'package:todo/feature/todo/presentation/todo_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,17 +12,12 @@ void main() {
 class Todo extends StatelessWidget {
   const Todo({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-          // fontFamily: "Roboto",
-
-          ),
       debugShowCheckedModeBanner: false,
-      home: const OnboardingScreen(),
+      home: TodoScreen(),
     );
   }
 }

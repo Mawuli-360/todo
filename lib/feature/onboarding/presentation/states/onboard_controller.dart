@@ -9,6 +9,5 @@ class OnboardController extends _$OnboardController {
 
   void onScreenChanged(int value) {
     state = state.copyWith(index: value);
-    print(state.index);
   }
 }
