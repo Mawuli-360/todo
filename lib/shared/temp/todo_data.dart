@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:todo/shared/resources/app_colors.dart';
 
 class TodoData {
@@ -21,4 +23,21 @@ class TodoData {
     AppColors.fadedOrange,
     AppColors.fadedRed
   ];
+}
+
+class TodoModel {
+  final String title;
+  final String time;
+  final int priority;
+  bool isCompleted;
+  TodoModel(
+      {required this.title,
+      required this.time,
+      required this.priority,
+      required this.isCompleted});
+
+  @override
+  String toString() {
+    return title;
+  }
 }

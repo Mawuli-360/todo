@@ -15,7 +15,14 @@ class TodoScreen extends ConsumerStatefulWidget {
 }
 
 class _TodoScreenState extends ConsumerState<TodoScreen> {
-  bool isCompleted = true;
+  List<TodoModel> tasks = [
+    TodoModel(
+        title: "Meeting", time: "10:00 AM", priority: 0, isCompleted: false),
+    TodoModel(
+        title: "Dancing", time: "8:00 PM", priority: 1, isCompleted: false),
+    TodoModel(
+        title: "Cleaning", time: "3:00 PM", priority: 2, isCompleted: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +58,12 @@ class _TodoScreenState extends ConsumerState<TodoScreen> {
                           style: TextStyle(fontSize: 18, color: Colors.black45),
                         ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(3000));
+                            },
                             padding: EdgeInsets.zero,
                             alignment: Alignment.bottomCenter,
                             icon: const Icon(
@@ -69,7 +81,7 @@ class _TodoScreenState extends ConsumerState<TodoScreen> {
                 children: [
                   const SizedBox(height: 10),
                   SizedBox(
-                    height: height * 0.1,
+                    height: height * 0.11,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: DatePicker(
@@ -82,89 +94,104 @@ class _TodoScreenState extends ConsumerState<TodoScreen> {
                       ),
                     ),
                   ),
-                  Slidable(
-                    endActionPane:
-                        const ActionPane(motion: StretchMotion(), children: [
-                      CircleAvatar(
-                        backgroundColor: AppColors.fadedRed,
-                        child: Icon(
-                          Icons.delete,
-                          color: AppColors.lightRed,
-                        ),
-                      )
-                    ]),
-                    child: Card(
-                      shape: isCompleted
-                          ? const StadiumBorder(
-                              side: BorderSide(color: AppColors.lightOrange))
-                          : null,
-                      color: isCompleted
-                          ? Colors.transparent
-                          : const Color.fromARGB(255, 243, 243, 252),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      elevation: isCompleted ? 0 : 2,
-                      child: ListTile(
-                        leading: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isCompleted = !isCompleted;
-                            });
-                          },
-                          child: isCompleted
-                              ? IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      isCompleted = !isCompleted;
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.check,
-                                    color: AppColors.lightOrange,
-                                  ))
-                              : Container(
-                                  height: height * 0.1,
-                                  width: width * 0.1,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.transparent,
-                                      border: Border.all(
-                                          color: AppColors.grey,
-                                          width: width * 0.004)),
-                                  child: const Center(
-                                      child: Icon(
-                                    Icons.check,
-                                  ))),
-                        ),
-                        title: Text(
-                          "Meet Ann",
-                          style: TextStyle(
-                              color: isCompleted
-                                  ? const Color(0xFF9D9DA1)
-                                  : Colors.black),
-                        ),
-                        subtitle: isCompleted ? null : const Text("8:00 PM"),
-                        trailing: SizedBox(
-                          width: width * 0.12,
-                          child: isCompleted
-                              ? const SizedBox.shrink()
-                              : Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: tasks.length,
+                        itemBuilder: (context, index) {
+                          final task = tasks[index];
+                          final isCompleted = task.isCompleted;
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: Slidable(
+                              endActionPane: ActionPane(
+                                  motion: const StretchMotion(),
                                   children: [
-                                    Container(
-                                      height: height * 0.03,
-                                      width: width * 0.03,
-                                      decoration: const BoxDecoration(
-                                          color: AppColors.lightGreen,
-                                          shape: BoxShape.circle),
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        setState(() {
+                                          tasks.remove(task);
+                                        });
+                                      },
+                                      icon: Icons.delete,
+                                      foregroundColor: AppColors.fadedRed,
+                                      backgroundColor: AppColors.lightRed,
                                     ),
-                                    const Icon(Icons.notifications),
-                                  ],
+                                  ]),
+                              child: Card(
+                                color: const Color.fromARGB(255, 243, 243, 252),
+                                shape: isCompleted
+                                    ? const StadiumBorder(
+                                        side:
+                                            BorderSide(color: AppColors.purple))
+                                    : null,
+                                elevation: isCompleted ? 0 : 2,
+                                child: ListTile(
+                                  leading: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        task.isCompleted = !task.isCompleted;
+                                        if (task.isCompleted == true) {
+                                          final task = tasks.removeAt(index);
+                                          tasks.add(task);
+                                        } else {
+                                          final task = tasks.removeAt(index);
+                                          tasks.insert(0, task);
+                                        }
+                                      });
+                                    },
+                                    child: isCompleted
+                                        ? const Icon(
+                                            Icons.check,
+                                            color: AppColors.purple,
+                                          )
+                                        : Container(
+                                            height: height * 0.1,
+                                            width: width * 0.1,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.transparent,
+                                                border: Border.all(
+                                                    color: AppColors.grey,
+                                                    width: width * 0.004)),
+                                            child: const Center(
+                                                child: Icon(
+                                              Icons.check,
+                                            ))),
+                                  ),
+                                  title: Text(
+                                    task.title,
+                                    style: TextStyle(
+                                        color: isCompleted
+                                            ? const Color(0xFF9D9DA1)
+                                            : Colors.black),
+                                  ),
+                                  subtitle:
+                                      isCompleted ? null : Text(task.time),
+                                  trailing: SizedBox(
+                                    width: width * 0.12,
+                                    child: isCompleted
+                                        ? const SizedBox.shrink()
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                height: height * 0.03,
+                                                width: width * 0.03,
+                                                decoration: const BoxDecoration(
+                                                    color: AppColors.lightGreen,
+                                                    shape: BoxShape.circle),
+                                              ),
+                                              const Icon(Icons.notifications),
+                                            ],
+                                          ),
+                                  ),
                                 ),
-                        ),
-                      ),
-                    ),
+                              ),
+                            ),
+                          );
+                        }),
                   )
                 ],
               ),
