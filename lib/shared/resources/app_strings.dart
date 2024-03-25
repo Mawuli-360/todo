@@ -11,4 +11,10 @@ class AppStrings {
   static const skip = "SKIP";
   static const next = "NEXT";
   static const getStarted = "GET STARTED";
+  static const noTask = "No tasks";
 }
+
+
+
+
+

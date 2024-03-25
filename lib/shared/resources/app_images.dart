@@ -9,4 +9,7 @@ class AppImages {
       AssetImage('assets/images/onboard2.png');
   static const AssetImage onboardingThree =
       AssetImage('assets/images/onboard3.png');
+    static const AssetImage note =
+      AssetImage('assets/images/note.png');
+  
 }

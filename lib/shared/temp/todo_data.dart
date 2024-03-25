@@ -15,29 +15,29 @@ class TodoData {
   static List<Color> priorityColor = [
     AppColors.lightGreen,
     AppColors.lightOrange,
-    AppColors.lightRed
+    AppColors.lightRed,
   ];
 
   static List<Color> priorityFadedColor = [
     AppColors.fadedGreen,
     AppColors.fadedOrange,
-    AppColors.fadedRed
+    AppColors.fadedRed,
   ];
 }
 
-class TodoModel {
-  final String title;
-  final String time;
-  final int priority;
-  bool isCompleted;
-  TodoModel(
-      {required this.title,
-      required this.time,
-      required this.priority,
-      required this.isCompleted});
+// class TodoModel {
+//   final String title;
+//   final String time;
+//   final int priority;
+//   bool isCompleted;
+//   TodoModel(
+//       {required this.title,
+//       required this.time,
+//       required this.priority,
+//        this.isCompleted = false});
 
-  @override
-  String toString() {
-    return title;
-  }
-}
+//   @override
+//   String toString() {
+//     return title;
+//   }
+// }

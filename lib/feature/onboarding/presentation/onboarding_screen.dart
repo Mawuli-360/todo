@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/feature/onboarding/presentation/states/onboard_controller.dart';
 import 'package:todo/feature/onboarding/presentation/widget/onboard_page.dart';
-import 'package:todo/feature/todo/presentation/todo_screen.dart';
+import 'package:todo/feature/todo/presentation/view/todo_screen.dart';
 import 'package:todo/shared/resources/app_colors.dart';
 import 'package:todo/shared/resources/app_strings.dart';
 import 'package:todo/shared/temp/onboard_data.dart';
@@ -42,6 +42,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const TodoScreen()));
+                    ref
+                        .read(onboardControllerProvider.notifier)
+                        .completeOnboarding();
                   },
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -72,6 +75,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           const TodoScreen()));
+                              ref
+                                  .read(onboardControllerProvider.notifier)
+                                  .completeOnboarding();
                             },
                             child: const Text(
                               AppStrings.skip,
