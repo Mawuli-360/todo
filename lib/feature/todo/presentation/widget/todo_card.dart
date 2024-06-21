@@ -86,7 +86,7 @@ class _TodoCardState extends ConsumerState<TodoCard> {
                     child: OutlinedButton(
                         onPressed: () => controller.updateComplete(widget.todo),
                         style: ButtonStyle(
-                            foregroundColor: MaterialStateColor.resolveWith(
+                            foregroundColor: WidgetStateColor.resolveWith(
                                 (states) => Colors.black)),
                         child: const Row(
                           children: [

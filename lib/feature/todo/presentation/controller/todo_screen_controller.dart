@@ -10,7 +10,6 @@ class TodoScreenController extends _$TodoScreenController {
   FutureOr<List<TodoModel>> build() async {
     List<TodoModel> todos =
         await ref.watch(todoServiceProvider).fetchAllTodos();
-    // final todoState = TodoScreenState.initial();
 
     return todos;
   }
